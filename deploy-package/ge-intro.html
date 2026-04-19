@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>General Eclectic — Intro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  html, body {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    background: #0a0a0a;
+    overflow: hidden;
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+  }
+  #root { width: 100vw; height: 100vh; position: relative; }
+</style>
+</head>
+<body>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="#1B4332"/><text x="200" y="195" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-weight="800" font-size="72" fill="#FFFFFF" letter-spacing="-3">GE</text><text x="200" y="245" text-anchor="middle" font-family="IBM Plex Serif, serif" font-style="italic" font-size="22" fill="#F0B429">Intro.</text></svg></template>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="animations.jsx"></script>
+<script type="text/babel" src="scenes.jsx"></script>
+
+<script type="text/babel">
+  const DURATION = 36;
+
+  function App() {
+    const rootRef = React.useRef(null);
+
+    return (
+      <div ref={rootRef} data-screen-label="00:00" style={{ width: '100%', height: '100%' }}>
+        <Stage
+          width={1920}
+          height={1080}
+          duration={DURATION}
+          background={GE.green}
+          persistKey="ge-intro"
+        >
+          {/* Subtle grain / vignette */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: `radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.04), rgba(0,0,0,0.25) 70%, rgba(0,0,0,0.55))`,
+            pointerEvents: 'none',
+          }}/>
+
+          <BrandChrome />
+          <SceneOpen />
+          <SceneProblem />
+          <SceneMAYA />
+          <SceneHits />
+          <SceneWordmark />
+
+          <TimestampTag rootRef={rootRef} />
+        </Stage>
+      </div>
+    );
+  }
+
+  // Writes seconds into the root's data-screen-label each second
+  function TimestampTag({ rootRef }) {
+    const t = useTime();
+    React.useEffect(() => {
+      if (!rootRef.current) return;
+      const m = Math.floor(t / 60);
+      const s = Math.floor(t % 60);
+      rootRef.current.setAttribute('data-screen-label',
+        `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`);
+    }, [Math.floor(t)]);
+    return null;
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
