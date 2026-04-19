@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STREAMING — General Eclectic</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Serif:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+            font-family: 'IBM Plex Sans', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        header {
+            padding: 40px 60px;
+            border-bottom: 1px solid rgba(240, 180, 41, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #F0B429;
+        }
+        header a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        header a:hover { color: #F0B429; }
+
+        .container {
+            padding: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 60px;
+        }
+
+        .agent-info h1 {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .agent-number {
+            color: #F0B429;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .agent-label {
+            color: #1B4332;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .agent-description {
+            max-width: 600px;
+            color: #cccccc;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-top: 30px;
+        }
+
+        .interactive-section {
+            margin-top: 80px;
+            margin-bottom: 80px;
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .platform-card {
+            background: linear-gradient(135deg, rgba(27, 67, 50, 0.1), rgba(240, 180, 41, 0.05));
+            border: 1px solid rgba(240, 180, 41, 0.2);
+            border-radius: 8px;
+            padding: 25px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .platform-card:hover {
+            border-color: #F0B429;
+            background: linear-gradient(135deg, rgba(27, 67, 50, 0.15), rgba(240, 180, 41, 0.1));
+        }
+
+        .platform-name {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: #F0B429;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .platform-stat {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .platform-detail {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 15px;
+        }
+
+        .platform-bar {
+            background: rgba(240, 180, 41, 0.1);
+            border-radius: 4px;
+            height: 6px;
+            overflow: hidden;
+        }
+
+        .platform-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #F0B429, #1B4332);
+            border-radius: 4px;
+            animation: fillPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes fillPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .timing-strategy {
+            background: rgba(27, 67, 50, 0.15);
+            border: 1px solid rgba(240, 180, 41, 0.2);
+            border-radius: 8px;
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        .timing-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: #F0B429;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .timeline-release {
+            display: flex;
+            margin-bottom: 25px;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .timeline-release::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 14px;
+            height: 14px;
+            background: #F0B429;
+            border-radius: 50%;
+            border: 2px solid rgba(240, 180, 41, 0.5);
+        }
+
+        .timeline-content-box {
+            flex: 1;
+        }
+
+        .release-time {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .release-title {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .release-platforms {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .platform-tag {
+            background: rgba(240, 180, 41, 0.15);
+            border: 1px solid rgba(240, 180, 41, 0.3);
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            color: #F0B429;
+        }
+
+        /* Pad Grid */
+        .pad-grid {
+            margin-top: 100px;
+            padding-top: 60px;
+            border-top: 1px solid rgba(240, 180, 41, 0.1);
+        }
+
+        .pad-grid-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: #888;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .pad-grid-container {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 12px;
+        }
+
+        .pad {
+            aspect-ratio: 1;
+            background: rgba(27, 67, 50, 0.3);
+            border: 2px solid rgba(240, 180, 41, 0.2);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: #999;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pad:hover {
+            border-color: #F0B429;
+            background: rgba(240, 180, 41, 0.1);
+            transform: scale(1.05);
+        }
+
+        .pad.active {
+            background: #F0B429;
+            border-color: #F0B429;
+            color: #0a0a0a;
+            font-weight: 700;
+        }
+
+        .pad span {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="title">G.E. · CREATIVE INFRASTRUCTURES</div>
+        <a href="/home.html">← Back</a>
+    </header>
+
+    <div class="container">
+        <div class="header-section">
+            <div class="agent-info">
+                <div class="agent-number">Agent 04</div>
+                <h1>STREAMING</h1>
+                <div class="agent-label">配信</div>
+                <div class="agent-description">
+                    Platform-aware release orchestration. Payload, timing, and placement — per surface. Not one release, but eight. Each platform gets what it wants, when it wants it. Algorithmic advantage.
+                </div>
+            </div>
+        </div>
+
+        <div class="interactive-section">
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <div class="platform-name">Spotify</div>
+                    <div class="platform-stat">2.4M</div>
+                    <div class="platform-detail">Monthly listeners, +18%</div>
+                    <div class="platform-bar">
+                        <div class="platform-fill" style="width: 92%;"></div>
+                    </div>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-name">Apple Music</div>
+                    <div class="platform-stat">680K</div>
+                    <div class="platform-detail">Subscribers, growing</div>
+                    <div class="platform-bar">
+                        <div class="platform-fill" style="width: 68%;"></div>
+                    </div>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-name">YouTube Music</div>
+                    <div class="platform-stat">1.1M</div>
+                    <div class="platform-detail">Video views daily</div>
+                    <div class="platform-bar">
+                        <div class="platform-fill" style="width: 85%;"></div>
+                    </div>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-name">TikTok</div>
+                    <div class="platform-stat">48M</div>
+                    <div class="platform-detail">Sound uses this month</div>
+                    <div class="platform-bar">
+                        <div class="platform-fill" style="width: 78%;"></div>
+                    </div>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-name">Amazon Music</div>
+                    <div class="platform-stat">420K</div>
+                    <div class="platform-detail">Streams per week</div>
+                    <div class="platform-bar">
+                        <div class="platform-fill" style="width: 55%;"></div>
+                    </div>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-name">SoundCloud</div>
+                    <div class="platform-stat">156K</div>
+                    <div class="platform-detail">Engaged community base</div>
+                    <div class="platform-bar">
+                        <div class="platform-fill" style="width: 38%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="timing-strategy">
+            <div class="timing-label">Release Orchestration Schedule</div>
+
+            <div class="timeline-release">
+                <div class="timeline-content-box">
+                    <div class="release-time">T-2 days</div>
+                    <div class="release-title">Pre-Release Playlist Pitching</div>
+                    <div class="release-platforms">
+                        <span class="platform-tag">Spotify</span>
+                        <span class="platform-tag">Apple</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-release">
+                <div class="timeline-content-box">
+                    <div class="release-time">T-24 hours</div>
+                    <div class="release-title">TikTok Seeding & Sound Asset Distribution</div>
+                    <div class="release-platforms">
+                        <span class="platform-tag">TikTok</span>
+                        <span class="platform-tag">Instagram</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-release">
+                <div class="timeline-content-box">
+                    <div class="release-time">T-6 hours</div>
+                    <div class="release-title">YouTube Premiere Setup & Countdown</div>
+                    <div class="release-platforms">
+                        <span class="platform-tag">YouTube</span>
+                        <span class="platform-tag">Twitter</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-release">
+                <div class="timeline-content-box">
+                    <div class="release-time">T-0 (Midnight PT)</div>
+                    <div class="release-title">Full Release Across All Platforms</div>
+                    <div class="release-platforms">
+                        <span class="platform-tag">All</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-release">
+                <div class="timeline-content-box">
+                    <div class="release-time">T+6 hours</div>
+                    <div class="release-title">Analytics Review & Push Notification Campaign</div>
+                    <div class="release-platforms">
+                        <span class="platform-tag">Email</span>
+                        <span class="platform-tag">Push</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pad-grid">
+            <div class="pad-grid-label">Navigate Agents</div>
+            <div class="pad-grid-container">
+                <a href="voice.html" class="pad"><span>Voice</span></a>
+                <a href="personality.html" class="pad"><span>Personality</span></a>
+                <a href="engagement.html" class="pad"><span>Engagement</span></a>
+                <a href="streaming.html" class="pad active"><span>Streaming</span></a>
+                <a href="touring.html" class="pad"><span>Touring</span></a>
+                <a href="localization.html" class="pad"><span>Localization</span></a>
+                <a href="liquid-api.html" class="pad"><span>Liquid API</span></a>
+                <a href="social-sync.html" class="pad"><span>Social Sync</span></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

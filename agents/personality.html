@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PERSONALITY — General Eclectic</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Serif:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+            font-family: 'IBM Plex Sans', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        header {
+            padding: 40px 60px;
+            border-bottom: 1px solid rgba(240, 180, 41, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #F0B429;
+        }
+        header a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        header a:hover { color: #F0B429; }
+
+        .container {
+            padding: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 60px;
+        }
+
+        .agent-info h1 {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .agent-number {
+            color: #F0B429;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .agent-label {
+            color: #1B4332;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .agent-description {
+            max-width: 600px;
+            color: #cccccc;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-top: 30px;
+        }
+
+        .interactive-section {
+            margin-top: 80px;
+            margin-bottom: 80px;
+        }
+
+        .vector-visualization {
+            background: linear-gradient(135deg, rgba(27, 67, 50, 0.1), rgba(240, 180, 41, 0.05));
+            border: 1px solid rgba(240, 180, 41, 0.2);
+            border-radius: 8px;
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vector-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: #F0B429;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        svg {
+            width: 100%;
+            height: 250px;
+            display: block;
+        }
+
+        .timeline {
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            background: #F0B429;
+            border-radius: 50%;
+            border: 2px solid rgba(240, 180, 41, 0.5);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 20px;
+            width: 2px;
+            height: 30px;
+            background: linear-gradient(180deg, rgba(240, 180, 41, 0.5), transparent);
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .timeline-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: #888;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .timeline-content {
+            background: rgba(27, 67, 50, 0.2);
+            border-left: 3px solid #F0B429;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+
+        .timeline-content-title {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .timeline-content-detail {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .coherence-meter {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(27, 67, 50, 0.15);
+            border-radius: 8px;
+        }
+
+        .meter-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: #888;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .meter-bar {
+            background: rgba(240, 180, 41, 0.1);
+            border: 1px solid rgba(240, 180, 41, 0.2);
+            border-radius: 4px;
+            height: 8px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .meter-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #F0B429, #1B4332);
+            width: 92%;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .meter-text {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            color: #666;
+        }
+
+        /* Pad Grid */
+        .pad-grid {
+            margin-top: 100px;
+            padding-top: 60px;
+            border-top: 1px solid rgba(240, 180, 41, 0.1);
+        }
+
+        .pad-grid-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: #888;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .pad-grid-container {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 12px;
+        }
+
+        .pad {
+            aspect-ratio: 1;
+            background: rgba(27, 67, 50, 0.3);
+            border: 2px solid rgba(240, 180, 41, 0.2);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: #999;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pad:hover {
+            border-color: #F0B429;
+            background: rgba(240, 180, 41, 0.1);
+            transform: scale(1.05);
+        }
+
+        .pad.active {
+            background: #F0B429;
+            border-color: #F0B429;
+            color: #0a0a0a;
+            font-weight: 700;
+        }
+
+        .pad span {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="title">G.E. · CREATIVE INFRASTRUCTURES</div>
+        <a href="/home.html">← Back</a>
+    </header>
+
+    <div class="container">
+        <div class="header-section">
+            <div class="agent-info">
+                <div class="agent-number">Agent 02</div>
+                <h1>PERSONALITY</h1>
+                <div class="agent-label">人格</div>
+                <div class="agent-description">
+                    Long-horizon persona coherence. Every release, every interview, every post — reconciled against a single vector. Consistency across channels. Growth without fragmentation. Identity as system.
+                </div>
+            </div>
+        </div>
+
+        <div class="interactive-section">
+            <div class="vector-visualization">
+                <div class="vector-label">Persona Vector Space</div>
+                <svg viewBox="0 0 1000 250" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <radialGradient id="centerGrad" cx="50%" cy="50%" r="40%">
+                            <stop offset="0%" style="stop-color:#F0B429;stop-opacity:0.3" />
+                            <stop offset="100%" style="stop-color:#F0B429;stop-opacity:0.05" />
+                        </radialGradient>
+                    </defs>
+                    <!-- Axes -->
+                    <line x1="100" y1="200" x2="900" y2="200" stroke="rgba(240,180,41,0.2)" stroke-width="2"/>
+                    <line x1="100" y1="50" x2="100" y2="200" stroke="rgba(240,180,41,0.2)" stroke-width="2"/>
+                    <!-- Central point -->
+                    <circle cx="500" cy="125" r="60" fill="url(#centerGrad)" stroke="#F0B429" stroke-width="2"/>
+                    <!-- Data points -->
+                    <circle cx="350" cy="90" r="8" fill="#F0B429" opacity="0.6"/>
+                    <circle cx="650" cy="110" r="8" fill="#F0B429" opacity="0.6"/>
+                    <circle cx="300" cy="150" r="8" fill="#F0B429" opacity="0.6"/>
+                    <circle cx="700" cy="140" r="8" fill="#F0B429" opacity="0.6"/>
+                    <circle cx="420" cy="170" r="8" fill="#F0B429" opacity="0.6"/>
+                    <!-- Connecting lines -->
+                    <line x1="500" y1="125" x2="350" y2="90" stroke="rgba(240,180,41,0.3)" stroke-width="1"/>
+                    <line x1="500" y1="125" x2="650" y2="110" stroke="rgba(240,180,41,0.3)" stroke-width="1"/>
+                    <line x1="500" y1="125" x2="300" y2="150" stroke="rgba(240,180,41,0.3)" stroke-width="1"/>
+                    <line x1="500" y1="125" x2="700" y2="140" stroke="rgba(240,180,41,0.3)" stroke-width="1"/>
+                    <line x1="500" y1="125" x2="420" y2="170" stroke="rgba(240,180,41,0.3)" stroke-width="1"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="interactive-section">
+            <div class="vector-label">Persona Evolution Timeline</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-label">Release: Album A</div>
+                        <div class="timeline-content-title">Aesthetic Alignment</div>
+                        <div class="timeline-content-detail">Visual identity, sonic palette, narrative</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-label">Campaign: Tour Announcement</div>
+                        <div class="timeline-content-title">Messaging Coherence</div>
+                        <div class="timeline-content-detail">Social posts, interviews, promotional content</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-label">Content: Behind-the-Scenes</div>
+                        <div class="timeline-content-title">Persona Authenticity</div>
+                        <div class="timeline-content-detail">Personal voice, vulnerability, engagement</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-label">Release: Single B</div>
+                        <div class="timeline-content-title">Evolution Signal</div>
+                        <div class="timeline-content-detail">Growth tracked, vector updated</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="coherence-meter">
+            <div class="meter-label">Persona Coherence Score</div>
+            <div class="meter-bar">
+                <div class="meter-fill"></div>
+            </div>
+            <div class="meter-text">
+                <span>Release alignment</span>
+                <span>92%</span>
+            </div>
+            <div class="meter-bar" style="margin-top: 15px;">
+                <div class="meter-fill" style="width: 88%"></div>
+            </div>
+            <div class="meter-text">
+                <span>Interview consistency</span>
+                <span>88%</span>
+            </div>
+            <div class="meter-bar" style="margin-top: 15px;">
+                <div class="meter-fill" style="width: 95%"></div>
+            </div>
+            <div class="meter-text">
+                <span>Social narrative continuity</span>
+                <span>95%</span>
+            </div>
+        </div>
+
+        <div class="pad-grid">
+            <div class="pad-grid-label">Navigate Agents</div>
+            <div class="pad-grid-container">
+                <a href="voice.html" class="pad"><span>Voice</span></a>
+                <a href="personality.html" class="pad active"><span>Personality</span></a>
+                <a href="engagement.html" class="pad"><span>Engagement</span></a>
+                <a href="streaming.html" class="pad"><span>Streaming</span></a>
+                <a href="touring.html" class="pad"><span>Touring</span></a>
+                <a href="localization.html" class="pad"><span>Localization</span></a>
+                <a href="liquid-api.html" class="pad"><span>Liquid API</span></a>
+                <a href="social-sync.html" class="pad"><span>Social Sync</span></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

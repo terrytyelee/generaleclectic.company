@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIQUID API — General Eclectic</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Serif:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+            font-family: 'IBM Plex Sans', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        header {
+            padding: 40px 60px;
+            border-bottom: 1px solid rgba(240, 180, 41, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #F0B429;
+        }
+        header a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        header a:hover { color: #F0B429; }
+
+        .container {
+            padding: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 60px;
+        }
+
+        .agent-info h1 {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .agent-number {
+            color: #F0B429;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .agent-label {
+            color: #1B4332;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .agent-description {
+            max-width: 600px;
+            color: #cccccc;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-top: 30px;
+        }
+
+        .interactive-section {
+            margin-top: 80px;
+            margin-bottom: 80px;
+        }
+
+        .endpoint-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .endpoint-card {
+            background: linear-gradient(135deg, rgba(27, 67, 50, 0.1), rgba(240, 180, 41, 0.05));
+            border: 1px solid rgba(240, 180, 41, 0.2);
+            border-radius: 8px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+
+        .endpoint-card:hover {
+            border-color: #F0B429;
+            background: linear-gradient(135deg, rgba(27, 67, 50, 0.15), rgba(240, 180, 41, 0.1));
+        }
+
+        .endpoint-method {
+            display: inline-block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .method-get {
+            background: rgba(27, 67, 50, 0.3);
+            color: #1B4332;
+        }
+
+        .method-post {
+            background: rgba(240, 180, 41, 0.2);
+            color: #F0B429;
+        }
+
+        .endpoint-path {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: #F0B429;
+            margin-bottom: 15px;
+            word-break: break-all;
+        }
+
+        .endpoint-description {
+            font-size: 13px;
+            color: #ccc;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .endpoint-params {
+            background: rgba(27, 67, 50, 0.2);
+            padding: 12px;
+            border-radius: 4px;
+            border-left: 3px solid #F0B429;
+        }
+
+        .params-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            color: #888;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .param-item {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .param-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .api-overview {
+            background: rgba(27, 67, 50, 0.15);
+            border: 1px solid rgba(240, 180, 41, 0.2);
+            border-radius: 8px;
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        .overview-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: #F0B429;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(240, 180, 41, 0.15);
+            border-radius: 6px;
+            padding: 20px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: #1B4332;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .code-line {
+            margin-bottom: 8px;
+        }
+
+        .code-comment {
+            color: #888;
+        }
+
+        .code-string {
+            color: #F0B429;
+        }
+
+        .code-key {
+            color: #1B4332;
+            font-weight: 600;
+        }
+
+        .api-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .api-stat {
+            background: rgba(240, 180, 41, 0.05);
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .api-stat-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            color: #888;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .api-stat-value {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #F0B429;
+        }
+
+        /* Pad Grid */
+        .pad-grid {
+            margin-top: 100px;
+            padding-top: 60px;
+            border-top: 1px solid rgba(240, 180, 41, 0.1);
+        }
+
+        .pad-grid-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: #888;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .pad-grid-container {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 12px;
+        }
+
+        .pad {
+            aspect-ratio: 1;
+            background: rgba(27, 67, 50, 0.3);
+            border: 2px solid rgba(240, 180, 41, 0.2);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: #999;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pad:hover {
+            border-color: #F0B429;
+            background: rgba(240, 180, 41, 0.1);
+            transform: scale(1.05);
+        }
+
+        .pad.active {
+            background: #F0B429;
+            border-color: #F0B429;
+            color: #0a0a0a;
+            font-weight: 700;
+        }
+
+        .pad span {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="title">G.E. · CREATIVE INFRASTRUCTURES</div>
+        <a href="/home.html">← Back</a>
+    </header>
+
+    <div class="container">
+        <div class="header-section">
+            <div class="agent-info">
+                <div class="agent-number">Agent 07</div>
+                <h1>LIQUID API</h1>
+                <div class="agent-label">開口部</div>
+                <div class="agent-description">
+                    An open surface for collaborators, partners, and downstream agents. RESTful access to all systems. Real-time metrics, content feeds, authentication hooks. The artist becomes infrastructure.
+                </div>
+            </div>
+        </div>
+
+        <div class="interactive-section">
+            <div class="endpoint-grid">
+                <div class="endpoint-card">
+                    <div class="endpoint-method method-get">GET</div>
+                    <div class="endpoint-path">/api/v1/artist/metrics</div>
+                    <div class="endpoint-description">Retrieve real-time metrics across all channels and engagement touchpoints.</div>
+                    <div class="endpoint-params">
+                        <div class="params-label">Query Parameters</div>
+                        <div class="param-item">period: 1d | 7d | 30d | custom</div>
+                        <div class="param-item">platforms: comma-separated list</div>
+                        <div class="param-item">include: streams,engagement,revenue</div>
+                    </div>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="endpoint-method method-post">POST</div>
+                    <div class="endpoint-path">/api/v1/content/publish</div>
+                    <div class="endpoint-description">Orchestrate multi-platform content releases with coordinated timing.</div>
+                    <div class="endpoint-params">
+                        <div class="params-label">Body Parameters</div>
+                        <div class="param-item">content_id: string</div>
+                        <div class="param-item">platforms: array</div>
+                        <div class="param-item">schedule: ISO8601 timestamp</div>
+                    </div>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="endpoint-method method-get">GET</div>
+                    <div class="endpoint-path">/api/v1/audience/segments</div>
+                    <div class="endpoint-description">Access demographic and behavioral audience segmentation data.</div>
+                    <div class="endpoint-params">
+                        <div class="params-label">Query Parameters</div>
+                        <div class="param-item">segment_type: geographic,behavioral,tier</div>
+                        <div class="param-item">depth: basic | detailed</div>
+                        <div class="param-item">limit: 1-100</div>
+                    </div>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="endpoint-method method-post">POST</div>
+                    <div class="endpoint-path">/api/v1/collaboration/partner</div>
+                    <div class="endpoint-description">Create collaboration agreements with partner integrations and webhooks.</div>
+                    <div class="endpoint-params">
+                        <div class="params-label">Body Parameters</div>
+                        <div class="param-item">partner_id: string</div>
+                        <div class="param-item">scope: read|write|admin</div>
+                        <div class="param-item">webhook_url: string</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="api-overview">
+            <div class="overview-label">Integration Example: Fetch Current Metrics</div>
+            <div class="code-block">
+                <div class="code-line"><span class="code-key">curl</span> -X GET "https://api.general-eclectic.com/v1/artist/metrics" \</div>
+                <div class="code-line">  -H <span class="code-string">"Authorization: Bearer YOUR_API_KEY"</span> \</div>
+                <div class="code-line">  -H <span class="code-string">"Content-Type: application/json"</span> \</div>
+                <div class="code-line">  -d <span class="code-string">'{"period":"7d", "platforms":"spotify,youtube"}'</span></div>
+            </div>
+
+            <div class="overview-label">Example Response</div>
+            <div class="code-block">
+                <div class="code-line"><span class="code-comment"># Returns JSON with current metrics across requested platforms</span></div>
+                <div class="code-line">{</div>
+                <div class="code-line">  <span class="code-key">"streams"</span>: <span class="code-string">2,847,192</span>,</div>
+                <div class="code-line">  <span class="code-key">"engagement_rate"</span>: <span class="code-string">0.084</span>,</div>
+                <div class="code-line">  <span class="code-key">"new_followers"</span>: <span class="code-string">18,420</span>,</div>
+                <div class="code-line">  <span class="code-key">"revenue"</span>: <span class="code-string">42,180.50</span></div>
+                <div class="code-line">}</div>
+            </div>
+
+            <div class="api-stats">
+                <div class="api-stat">
+                    <div class="api-stat-label">Endpoints</div>
+                    <div class="api-stat-value">28</div>
+                </div>
+                <div class="api-stat">
+                    <div class="api-stat-label">Active Integrations</div>
+                    <div class="api-stat-value">12</div>
+                </div>
+                <div class="api-stat">
+                    <div class="api-stat-label">Uptime SLA</div>
+                    <div class="api-stat-value">99.9%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pad-grid">
+            <div class="pad-grid-label">Navigate Agents</div>
+            <div class="pad-grid-container">
+                <a href="voice.html" class="pad"><span>Voice</span></a>
+                <a href="personality.html" class="pad"><span>Personality</span></a>
+                <a href="engagement.html" class="pad"><span>Engagement</span></a>
+                <a href="streaming.html" class="pad"><span>Streaming</span></a>
+                <a href="touring.html" class="pad"><span>Touring</span></a>
+                <a href="localization.html" class="pad"><span>Localization</span></a>
+                <a href="liquid-api.html" class="pad active"><span>Liquid API</span></a>
+                <a href="social-sync.html" class="pad"><span>Social Sync</span></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
