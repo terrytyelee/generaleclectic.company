@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>General Eclectic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=IBM+Plex+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #0a0a0a; }
+
+    iframe {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      border: none;
+      z-index: 1;
+    }
+
+    .enter-overlay {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-end;
+      padding-bottom: 12vh;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .enter-overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .enter-link {
+      font-family: 'IBM Plex Serif', serif;
+      font-style: italic;
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      padding: 14px 40px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      transition: all 0.4s ease;
+      background: rgba(10, 10, 10, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .enter-link:hover {
+      color: #F0B429;
+      border-color: rgba(240, 180, 41, 0.4);
+      background: rgba(27, 67, 50, 0.3);
+    }
+
+    .skip-link {
+      position: fixed;
+      bottom: 24px; right: 28px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.3);
+      text-decoration: none;
+      z-index: 20;
+      transition: color 0.3s ease;
+      letter-spacing: 0.04em;
+    }
+    .skip-link:hover {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  </style>
+</head>
+<body>
+
+  <iframe src="intro.html" allow="autoplay"></iframe>
+
+  <div class="enter-overlay" id="enterOverlay">
+    <a href="home.html" class="enter-link">Enter Site</a>
+  </div>
+
+  <a href="home.html" class="skip-link" id="skipLink">Skip Intro &rarr;</a>
+
+  <script>
+    // Show "Enter Site" after the 36-second animation completes
+    setTimeout(function() {
+      document.getElementById('enterOverlay').classList.add('visible');
+    }, 37000);
+
+    // Show skip link after 3 seconds
+    var skipLink = document.getElementById('skipLink');
+    skipLink.style.opacity = '0';
+    skipLink.style.transition = 'opacity 0.6s ease';
+    setTimeout(function() {
+      skipLink.style.opacity = '1';
+    }, 3000);
+  </script>
+
+</body>
+</html>
