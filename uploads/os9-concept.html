@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>General Eclectic — generaleclectic.company</title>
+<meta name="description" content="General Eclectic. A Label for the Infinite Age. Familiar Surprises.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --chrome: #c0c0c0;
+  --chrome-light: #dfdfdf;
+  --chrome-dark: #808080;
+  --chrome-darker: #404040;
+  --window-bg: #ffffff;
+  --desktop-bg: #5f7b97;
+  --title-active: #000080;
+  --title-inactive: #808080;
+  --text: #000000;
+  --text-dim: #555555;
+  --link: #0000cc;
+  --accent: #000080;
+  --highlight: #000080;
+  --highlight-text: #ffffff;
+  --stripe-1: #c0c0c0;
+  --stripe-2: #a0a0a0;
+  --pixel: 1px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'IBM Plex Mono', 'Geneva', 'Lucida Grande', monospace;
+  background: var(--desktop-bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: default;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* ═══ MENU BAR ═══ */
+.menubar {
+  position: fixed; top:0; left:0; right:0; z-index: 1000;
+  background: var(--chrome);
+  border-bottom: 2px solid var(--chrome-dark);
+  height: 24px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  gap: 16px;
+  box-shadow: inset 0 -1px 0 var(--chrome-darker);
+  user-select: none;
+}
+.menubar .apple {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.menubar span {
+  font-size: 12px;
+  font-weight: 600;
+  cursor: default;
+  padding: 2px 8px;
+  border-radius: 2px;
+}
+.menubar span:hover { background: var(--highlight); color: var(--highlight-text); }
+.menubar .right { margin-left: auto; font-size: 11px; font-weight: 400; color: var(--text-dim); }
+.menubar .right:hover { background: transparent; color: var(--text-dim); }
+
+/* ═══ DESKTOP ═══ */
+.desktop {
+  padding: 36px 16px 16px;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ═══ DESKTOP ICONS ═══ */
+.desktop-icons {
+  position: fixed;
+  right: 20px;
+  top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 5;
+}
+.desktop-icon {
+  width: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 2px;
+  cursor: pointer;
+  text-align: center;
+}
+.desktop-icon:hover { background: rgba(255,255,255,0.15); }
+.desktop-icon .icon-img {
+  width: 40px; height: 40px;
+  background: var(--chrome);
+  border: 2px outset var(--chrome-light);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.desktop-icon .icon-label {
+  font-size: 10px;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+  line-height: 1.2;
+}
+
+/* ═══ WINDOW ═══ */
+.window {
+  position: absolute;
+  background: var(--window-bg);
+  border: 2px outset var(--chrome-light);
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  min-width: 280px;
+}
+.window.collapsed .window-body { display: none; }
+.window.collapsed { min-width: 200px; }
+
+.titlebar {
+  background: linear-gradient(180deg, var(--chrome-light) 0%, var(--chrome) 45%, var(--chrome-dark) 100%);
+  border-bottom: 1px solid var(--chrome-darker);
+  padding: 3px 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: grab;
+  user-select: none;
+  min-height: 22px;
+}
+.titlebar:active { cursor: grabbing; }
+.titlebar-buttons {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.btn-close, .btn-min, .btn-max {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+.btn-close { background: #ff5f56; }
+.btn-min { background: #ffbd2e; }
+.btn-max { background: #27c93f; }
+.titlebar-title {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.titlebar-stripe {
+  flex: 0 0 40px;
+  height: 10px;
+  background: repeating-linear-gradient(
+    180deg,
+    var(--chrome-light) 0px, var(--chrome-light) 2px,
+    var(--chrome-dark) 2px, var(--chrome-dark) 4px
+  );
+}
+
+.window-body {
+  padding: 12px;
+  overflow-y: auto;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* ═══ WINDOW CONTENT STYLES ═══ */
+.window-body h2 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--chrome);
+  padding-bottom: 4px;
+}
+.window-body h3 {
+  font-size: 13px;
+  font-weight: 700;
+  margin: 10px 0 4px;
+}
+.window-body p { margin-bottom: 8px; }
+.window-body .dim { color: var(--text-dim); }
+.window-body .mono { font-family: 'IBM Plex Mono', monospace; }
+
+/* Retro list */
+.retro-list { list-style: none; padding: 0; }
+.retro-list li {
+  padding: 4px 0 4px 16px;
+  position: relative;
+  border-bottom: 1px dotted var(--chrome);
+}
+.retro-list li::before {
+  content: "▸";
+  position: absolute; left: 2px; top: 4px;
+  color: var(--accent);
+  font-size: 10px;
+}
+
+/* Retro table */
+.retro-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  margin: 8px 0;
+}
+.retro-table th {
+  background: var(--chrome);
+  border: 1px solid var(--chrome-dark);
+  padding: 3px 6px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.retro-table td {
+  border: 1px solid var(--chrome);
+  padding: 3px 6px;
+}
+.retro-table tr:nth-child(even) td { background: #f5f5f5; }
+
+/* Tag pills */
+.tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border: 1px solid;
+  border-radius: 2px;
+  margin: 2px 2px 2px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.tag--active { color: #008000; border-color: #008000; background: #e6f5e6; }
+.tag--internal { color: var(--accent); border-color: var(--accent); background: #e6e6ff; }
+.tag--dev { color: #cc6600; border-color: #cc6600; background: #fff5e6; }
+.tag--maya { color: #800080; border-color: #800080; background: #f5e6f5; }
+
+/* Pull quote */
+.os9-quote {
+  margin: 10px 0;
+  padding: 8px 10px;
+  background: #fffff0;
+  border: 2px inset var(--chrome);
+  font-style: italic;
+  font-size: 12px;
+}
+
+/* Folder view */
+.folder-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 8px 0;
+}
+.folder-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 4px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  text-align: center;
+}
+.folder-item:hover { background: #e0e0ff; border-color: var(--accent); }
+.folder-item .f-icon {
+  width: 36px; height: 30px;
+  margin-bottom: 4px;
+  background: #f0d060;
+  border: 1px solid #c0a030;
+  border-radius: 2px 2px 0 0;
+  position: relative;
+}
+.folder-item .f-icon::before {
+  content:""; position: absolute;
+  top: -6px; left: 0; width: 16px; height: 6px;
+  background: #f0d060; border: 1px solid #c0a030;
+  border-bottom: none; border-radius: 2px 2px 0 0;
+}
+.folder-item .f-label { font-size: 10px; font-weight: 600; }
+
+/* Progress bar */
+.progress-bar {
+  height: 14px;
+  background: var(--chrome);
+  border: 2px inset var(--chrome-dark);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 4px 0;
+}
+.progress-fill {
+  height: 100%;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--accent) 0px, var(--accent) 4px,
+    #4040c0 4px, #4040c0 8px
+  );
+  transition: width 1.5s ease;
+}
+
+/* ═══ HERO WINDOW SPECIAL ═══ */
+.hero-content {
+  text-align: center;
+  padding: 20px 16px;
+}
+.hero-content .ge-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.hero-content .ge-sub {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+  font-weight: 400;
+}
+.hero-content .ge-tagline {
+  font-size: 18px;
+  font-style: italic;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.hero-content .ge-meta {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ═══ MAYA WINDOW ═══ */
+.maya-viz {
+  text-align: center;
+  padding: 12px;
+  background: #0a0a1a;
+  border: 2px inset var(--chrome-dark);
+  color: #00ff88;
+  margin: 8px 0;
+}
+.maya-viz .maya-name {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 10px #00ff88;
+  margin-bottom: 2px;
+}
+.maya-viz .maya-full {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #00cc66;
+  margin-bottom: 8px;
+}
+.maya-viz .maya-desc {
+  font-size: 11px;
+  color: #88ddaa;
+  max-width: 380px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* ═══ ARTISTE.MD TERMINAL ═══ */
+.terminal {
+  background: #1a1a2e;
+  color: #e0e0e0;
+  border: 2px inset var(--chrome-dark);
+  padding: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  margin: 8px 0;
+}
+.terminal .prompt { color: #00cc66; }
+.terminal .comment { color: #666688; }
+.terminal .string { color: #f0a060; }
+.terminal .keyword { color: #6688ff; }
+.terminal .cursor {
+  display: inline-block; width: 7px; height: 13px;
+  background: #00cc66;
+  animation: blink 1s step-end infinite;
+  vertical-align: text-bottom;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 860px) {
+  .desktop-icons { display: none; }
+  .window {
+    position: relative !important;
+    width: 100% !important;
+    left: 0 !important;
+    top: auto !important;
+    margin-bottom: 12px;
+  }
+  .desktop { padding: 32px 8px 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- MENU BAR -->
+<div class="menubar">
+  <span class="apple">GE</span>
+  <span>File</span>
+  <span>Edit</span>
+  <span>View</span>
+  <span>Artists</span>
+  <span>MAYA</span>
+  <span>Help</span>
+  <span class="right" id="clock"></span>
+</div>
+
+<!-- DESKTOP ICONS -->
+<div class="desktop-icons">
+  <div class="desktop-icon"><div class="icon-img">📁</div><div class="icon-label">ChynaHouse</div></div>
+  <div class="desktop-icon"><div class="icon-img">🎵</div><div class="icon-label">Now Playing</div></div>
+  <div class="desktop-icon"><div class="icon-img">📄</div><div class="icon-label">memo.md</div></div>
+  <div class="desktop-icon"><div class="icon-img">🌐</div><div class="icon-label">Signal</div></div>
+</div>
+
+<!-- DESKTOP -->
+<div class="desktop" id="desktop">
+
+<!-- ═══ WINDOW 1: HERO ═══ -->
+<div class="window" id="win-hero" style="left: 30px; top: 40px; width: 520px;">
+  <div class="titlebar" data-window="win-hero">
+    <div class="titlebar-buttons"><div class="btn-close"></div><div class="btn-min"></div><div class="btn-max"></div></div>
+    <div class="titlebar-stripe"></div>
+    <div class="titlebar-title">generaleclectic.company</div>
+    <div class="titlebar-stripe"></div>
+  </div>
+  <div class="window-body">
+    <div class="hero-content">
+      <div class="ge-title">General Eclectic</div>
+      <div class="ge-sub">G.E. Creative Infrastructures</div>
+      <div class="ge-tagline">Familiar Surprises.</div>
+      <p style="font-size: 12px; max-width: 420px; margin: 0 auto 16px; color: var(--text-dim);">A label for the Infinite Age. A roster that scales. Revenue that recurs. Artistry that compounds.</p>
+      <div class="ge-meta">
+        <span>Seed · $1.5M</span>
+        <span>Terence Leong</span>
+        <span>April 2026</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ WINDOW 2: THE THESIS ═══ -->
+<div class="window" id="win-thesis" style="left: 50px; top: 300px; width: 480px;">
+  <div class="titlebar" data-window="win-thesis">
+    <div class="titlebar-buttons"><div class="btn-close"></div><div class="btn-min"></div><div class="btn-max"></div></div>
+    <div class="titlebar-stripe"></div>
+    <div class="titlebar-title">The Thesis — Linear → Dynamic</div>
+    <div class="titlebar-stripe"></div>
+  </div>
+  <div class="window-body" style="max-height: 340px;">
+    <h2>From Linear to Dynamic</h2>
+    <p>For a hundred years, the artist has been linear. One body. One stage. One city at a time. Their talent is infinite. Their time is not.</p>
+    <div class="os9-quote">A linear artist has a career. A dynamic artist has a world.</div>
+    <p>A dynamic artist is many places at many times. Their voice model performs in Tokyo while they sleep in LA. Their AI personality holds ten thousand conversations simultaneously. Their sonic DNA generates revenue across platforms, languages, and formats.</p>
+    <p class="dim">The artist stops being a content factory and becomes a <strong>Creative Director</strong> — setting the vision, approving the output, protecting the taste. The machine handles the distribution. The human handles the soul.</p>
+    <h3>The Shift</h3>
+    <table class="retro-table">
+      <tr><th></th><th>Linear Artist</th><th>Dynamic Artist</th></tr>
+      <tr><td><strong>Presence</strong></td><td>One city at a time</td><td>Every city, every platform</td></tr>
+      <tr><td><strong>Revenue</strong></td><td>Capped by human hours</td><td>Recurring, compounding</td></tr>
+      <tr><td><strong>Output</strong></td><td>Album every 2 years</td><td>Always-on, always-earning</td></tr>
+      <tr><td><strong>Role</strong></td><td>Content factory</td><td>Creative Director</td></tr>
+    </table>
+    <p class="dim" style="font-size: 11px; margin-top: 8px;"><strong>This shift — from linear to dynamic — is the entire thesis of the company.</strong></p>
+  </div>
+</div>
+
+<!-- ═══ WINDOW 3: MAYA ═══ -->
+<div class="window" id="win-maya" style="left: 560px; top: 60px; width: 440px;">
+  <div class="titlebar" data-window="win-maya">
+    <div class="titlebar-buttons"><div class="btn-close"></div><div class="btn-min"></div><div class="btn-max"></div></div>
+    <div class="titlebar-stripe"></div>
+    <div class="titlebar-title">MAYA.app — The LLM of Popularity</div>
+    <div class="titlebar-stripe"></div>
+  </div>
+  <div class="window-body" style="max-height: 420px;">
+    <div class="maya-viz">
+      <div class="maya-name">MAYA</div>
+      <div class="maya-full">Most Advanced Yet Acceptable</div>
+      <div class="maya-desc">Named after Raymond Loewy's design principle. The world's only hit-science LLM. She ingests trend signals, audience behaviour, streaming patterns, social sentiment, and cultural velocity — and applies that intelligence to every decision we make.</div>
+    </div>
+    <h3>What MAYA Does</h3>
+    <p>MAYA tells us who to sign, what to produce, how to position, when to release, and where the gap between familiar and surprising is widest right now.</p>
+    <div class="os9-quote">Traditional A&R is instinct. MAYA is instinct with a hundred million data points behind it.</div>
+    <h3>How It Works</h3>
+    <div class="progress-bar"><div class="progress-fill" style="width: 78%;"></div></div>
+    <p class="dim" style="font-size: 10px;">Cultural Signal Ingestion: 78% trained</p>
+    <div class="progress-bar"><div class="progress-fill" style="width: 62%;"></div></div>
+    <p class="dim" style="font-size: 10px;">Audience Behaviour Model: 62% trained</p>
+    <div class="progress-bar"><div class="progress-fill" style="width: 45%;"></div></div>
+    <p class="dim" style="font-size: 10px;">Hit Prediction Engine: 45% trained</p>
+    <p style="margin-top: 10px; font-size: 11px;"><strong>The artist plays the instrument. We built the instrument. MAYA tunes it.</strong></p>
+  </div>
+</div>
+
+<!-- ═══ WINDOW 4: ARTISTE.MD ═══ -->
+<div class="window" id="win-artiste" style="left: 80px; top: 660px; width: 540px;">
+  <div class="titlebar" data-window="win-artiste">
+    <div class="titlebar-buttons"><div class="btn-close"></div><div class="btn-min"></div><div class="btn-max"></div></div>
+    <div class="titlebar-stripe"></div>
+    <div class="titlebar-title">artiste.md — Creative DNA on Disk</div>
+    <div class="titlebar-stripe"></div>
+  </div>
+  <div class="window-body" style="max-height: 380px;">
+    <div class="terminal">
+      <span class="comment"># artiste.md — your manifest, your soul-on-a-disk</span><br>
+      <span class="comment"># like claude.md, but for creatives</span><br><br>
+      <span class="prompt">$</span> cat artist.md<br><br>
+      <span class="keyword">---</span><br>
+      <span class="keyword">name:</span> <span class="string">"Lauren Woo"</span><br>
+      <span class="keyword">voice:</span> <span class="string">"/stems/vocal-dna.wav"</span><br>
+      <span class="keyword">taste:</span> <span class="string">"mandopop × lo-fi × R&B"</span><br>
+      <span class="keyword">worldview:</span> <span class="string">"台北 dreams in every frequency"</span><br>
+      <span class="keyword">creative_director:</span> <span class="string">true</span><br>
+      <span class="keyword">status:</span> <span class="string">"dynamic"</span><br>
+      <span class="keyword">---</span><br><br>
+      <span class="prompt">$</span> artiste deploy --stack full<br>
+      <span class="comment">→ Deploying A&R Stack...</span><br>
+      <span class="comment">→ Unique Voice: ██████████ ready</span><br>
+      <span class="comment">→ Infinite Streaming: ██████████ ready</span><br>
+      <span class="comment">→ Sync Autopilot: ██████████ ready</span><br>
+      <span class="comment">→ 10 capabilities armed. artist is dynamic.</span><br><br>
+      <span class="prompt">$</span> <span class="cursor"></span>
+    </div>
+    <h3>The A&R Stack — 10 Capabilities</h3>
+    <ul class="retro-list">
+      <li><strong>Unique Voice</strong> — Bespoke vocal instrument. Licensed, owned by the artist.</li>
+      <li><strong>Unique Personality</strong> — Not a chatbot. Their actual mind, extended.</li>
+      <li><strong>Infinite Engagement</strong> — Fan conversations at scale across languages.</li>
+      <li><strong>Infinite Streaming</strong> — 24/7 lo-fi, B-sides, ambient. Revenue that never sleeps.</li>
+      <li><strong>Infinite Touring</strong> — AI live shows, multiple cities, same night.</li>
+      <li><strong>Globally Ready</strong> — Every language, every platform, one artist.</li>
+      <li><strong>Liquid API</strong> — Adaptive audio for gaming, VR, spatial, sync.</li>
+      <li><strong>Social Engine</strong> — Daily content from creative DNA. Approval only.</li>
+      <li><strong>Sync Autopilot</strong> — AI placement across film, TV, gaming in real time.</li>
+      <li><strong>Audience Intelligence</strong> — What fans want next, when to move.</li>
+    </ul>
+    <p class="dim" style="margin-top: 8px; font-size: 11px;"><strong>We intend to productize all of this.</strong> artiste.md is both our practice and our platform.</p>
+  </div>
+</div>
+
+<!-- ═══ WINDOW 5: PROPERTIES ═══ -->
+<div class="window" id="win-properties" style="left: 580px; top: 500px; width: 420px;">
+  <div class="titlebar" data-window="win-properties">
+    <div class="titlebar-buttons"><div class="btn-close"></div><div class="btn-min"></div><div class="btn-max"></div></div>
+    <div class="titlebar-stripe"></div>
+    <div class="titlebar-title">Three Worlds, One Community</div>
+    <div class="titlebar-stripe"></div>
+  </div>
+  <div class="window-body" style="max-height: 340px;">
+    <p class="dim" style="font-size: 11px; margin-bottom: 10px;">The person streaming Lauren Woo at 2am is the same person who wants the Chynatown hoodie. They're not three audiences. They're one person with three moods.</p>
+    <div class="folder-grid">
+      <div class="folder-item">
+        <div class="f-icon" style="background: #6060c0; border-color: #4040a0;"></div>
+        <div class="f-label">ChynaHouse 華風</div>
+        <span class="tag tag--active">Catalogue</span>
+      </div>
+      <div class="folder-item">
+        <div class="f-icon" style="background: #c06060; border-color: #a04040;"></div>
+        <div class="f-label">Chynatown 華街</div>
+        <span class="tag tag--internal">Brand</span>
+      </div>
+      <div class="folder-item">
+        <div class="f-icon" style="background: #404040; border-color: #202020;"></div>
+        <div class="f-label">KNTR 無貌叛逆</div>
+        <span class="tag tag--dev">Edge</span>
+      </div>
+    </div>
+    <h3>001 · ChynaHouse 華風</h3>
+    <p>Twenty years of genre-fluid Asian artistry. Masters owned. 600+ tracks. Lauren Woo, BAYA 小林航, kiki, Ju New, NIKKOUSTIC, 羊駝小姐, CØZY Tseng.</p>
+    <h3>002 · Chynatown 華街</h3>
+    <p>The Chinatown that doesn't exist on any map. Fashion, art prints, cultural identity. Capsule drops, lifestyle licensing, Asia retail.</p>
+    <h3>003 · KNTR 無貌叛逆</h3>
+    <p>Faceless Rebellion. Provocative DROPS at the intersection of art, tech, and financial absurdity. A rubber Cuban Links chain that's also a cold wallet.</p>
+    <h3>The Dynamic Catalogue</h3>
+    <table class="retro-table">
+      <tr><th>Current</th><th>Target</th><th>Multiplier</th></tr>
+      <tr><td>600+ masters</td><td>3,000+ assets</td><td>5× per track</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ WINDOW 6: REVENUE ═══ -->
+<div class="window" id="win-revenue" style="left: 40px; top: 1060px; width: 580px;">
+  <div class="titlebar" data-window="win-revenue">
+    <div class="titlebar-buttons"><div class="btn-close"></div><div class="btn-min"></div><div class="btn-max"></div></div>
+    <div class="titlebar-stripe"></div>
+    <div class="titlebar-title">Revenue Architecture — 8 Lines</div>
+    <div class="titlebar-stripe"></div>
+  </div>
+  <div class="window-body" style="max-height: 360px;">
+    <p class="dim" style="font-size: 11px;">A traditional label makes money one way: streams. We make money eight ways, and most of them recur.</p>
+    <table class="retro-table">
+      <tr><th>Revenue Line</th><th>Yr 1</th><th>Yr 2</th><th>Yr 3</th></tr>
+      <tr><td>Streaming & Releases</td><td>$50-150K</td><td>$300-600K</td><td>$800K-1.5M</td></tr>
+      <tr><td>Generative Streaming</td><td>$15-40K</td><td>$80-200K</td><td>$250-500K</td></tr>
+      <tr><td>Liquid Licensing API</td><td>—</td><td>$30-80K</td><td>$150-400K</td></tr>
+      <tr><td>Fan World Subs</td><td>$10-30K</td><td>$60-150K</td><td>$200-500K</td></tr>
+      <tr><td>Sync & Licensing</td><td>$30-80K</td><td>$150-300K</td><td>$400-800K</td></tr>
+      <tr><td>Agent Fees</td><td>$20-50K</td><td>$80-180K</td><td>$200-400K</td></tr>
+      <tr><td>Catalogue</td><td>$20-40K</td><td>$40-80K</td><td>$60-120K</td></tr>
+      <tr><td>artiste.md SaaS</td><td>—</td><td>$50-100K</td><td>$200-500K</td></tr>
+      <tr style="background: #e6e6ff;"><td><strong>TOTAL</strong></td><td><strong>$145-390K</strong></td><td><strong>$790K-1.7M</strong></td><td><strong>$2.3-4.7M</strong></td></tr>
+    </table>
+    <div class="os9-quote" style="font-size: 11px;">The more artists we sign, the more the engine compounds. That's not a tech company pitch. That's a label with radically better economics.</div>
+  </div>
+</div>
+
+<!-- ═══ WINDOW 7: THE ASK ═══ -->
+<div class="window" id="win-ask" style="left: 640px; top: 870px; width: 380px;">
+  <div class="titlebar" data-window="win-ask">
+    <div class="titlebar-buttons"><div class="btn-close"></div><div class="btn-min"></div><div class="btn-max"></div></div>
+    <div class="titlebar-stripe"></div>
+    <div class="titlebar-title">The Ask</div>
+    <div class="titlebar-stripe"></div>
+  </div>
+  <div class="window-body">
+    <div style="text-align: center; padding: 12px 0;">
+      <div style="font-size: 36px; font-weight: 700; letter-spacing: -0.02em;">$1.5M</div>
+      <div class="dim" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 2px;">Seed Round</div>
+    </div>
+    <p>Sign the first cohort. Deploy artiste.md and MAYA on every one of them. Shift them from linear to dynamic. Prove that five dynamic artists generate the revenue of a roster three times that size.</p>
+    <div class="os9-quote" style="text-align: center; font-size: 13px;">I want to build it with you.</div>
+    <div style="text-align: center; margin-top: 10px;">
+      <p style="font-weight: 700; margin-bottom: 2px;">Terence Leong</p>
+      <p class="dim" style="font-size: 11px;">Founder, General Eclectic</p>
+      <p class="dim" style="font-size: 10px;">generaleclectic.company</p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /desktop -->
+
+<script>
+// Clock
+function updateClock() {
+  const now = new Date();
+  const h = now.getHours();
+  const m = String(now.getMinutes()).padStart(2, '0');
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const h12 = h % 12 || 12;
+  document.getElementById('clock').textContent = h12 + ':' + m + ' ' + ampm;
+}
+updateClock();
+setInterval(updateClock, 30000);
+
+// Draggable windows
+let dragEl = null, dragX = 0, dragY = 0, elX = 0, elY = 0, zIdx = 100;
+
+document.querySelectorAll('.titlebar').forEach(bar => {
+  bar.addEventListener('mousedown', e => {
+    if (e.target.classList.contains('btn-close') || e.target.classList.contains('btn-min') || e.target.classList.contains('btn-max')) return;
+    const win = bar.closest('.window');
+    dragEl = win;
+    const rect = win.getBoundingClientRect();
+    dragX = e.clientX;
+    dragY = e.clientY;
+    elX = rect.left + window.scrollX;
+    elY = rect.top + window.scrollY;
+    win.style.zIndex = ++zIdx;
+    e.preventDefault();
+  });
+});
+
+document.addEventListener('mousemove', e => {
+  if (!dragEl) return;
+  const dx = e.clientX - dragX;
+  const dy = e.clientY - dragY;
+  dragEl.style.left = (elX + dx) + 'px';
+  dragEl.style.top = (elY + dy) + 'px';
+  dragEl.style.position = 'absolute';
+});
+
+document.addEventListener('mouseup', () => { dragEl = null; });
+
+// Click to focus
+document.querySelectorAll('.window').forEach(win => {
+  win.addEventListener('mousedown', () => { win.style.zIndex = ++zIdx; });
+});
+
+// Close / minimize
+document.querySelectorAll('.btn-close').forEach(btn => {
+  btn.addEventListener('click', () => { btn.closest('.window').style.display = 'none'; });
+});
+document.querySelectorAll('.btn-min').forEach(btn => {
+  btn.addEventListener('click', () => { btn.closest('.window').classList.toggle('collapsed'); });
+});
+</script>
+
+</body>
+</html>

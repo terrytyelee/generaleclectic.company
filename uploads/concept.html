@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>General Eclectic — Intelligence for Creatives</title>
+<meta name="description" content="G.E. Creative Infrastructures. A creative infrastructure company for the Infinite Age. Part label, part technology studio, part distribution engine.">
+<meta property="og:title" content="General Eclectic">
+<meta property="og:description" content="Intelligence for Creatives.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://generaleclectic.company">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0b0b0f;
+    --ink-2: #1f2430;
+    --muted: #6b7280;
+    --muted-2: #9ca3af;
+    --line: #e5e7eb;
+    --line-soft: #f3f4f6;
+    --bg: #fafaf7;
+    --paper: #ffffff;
+    --accent: #6366f1;
+    --accent-2: #8b5cf6;
+    --ok: #10b981;
+    --warn: #f59e0b;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.55;
+    font-weight: 400;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+  .wide { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+  /* Top bar */
+  nav.topbar {
+    position: sticky; top:0; z-index: 20;
+    backdrop-filter: saturate(140%) blur(10px);
+    background: rgba(250,250,247,0.78);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    max-width: 1080px; margin:0 auto;
+    padding: 14px 28px;
+    display:flex; justify-content: space-between; align-items:center;
+    font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .brand { font-weight: 700; letter-spacing: 0.04em; color: var(--ink); }
+  .nav-links { display:flex; gap: 22px; }
+  .nav-links a { color: var(--muted); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--ink); }
+  @media (max-width: 680px){ .nav-links { display:none; } }
+
+  /* Hero */
+  header.hero { padding: 120px 0 96px; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    margin-bottom: 28px;
+  }
+  h1.display {
+    font-size: clamp(2.6rem, 6.4vw, 5rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+    color: var(--ink);
+    margin-bottom: 22px;
+  }
+  .lede {
+    font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+    color: var(--ink-2);
+    max-width: 620px;
+    line-height: 1.55;
+    font-weight: 400;
+  }
+  .lede em { font-family: 'IBM Plex Serif', serif; font-style: italic; color: var(--accent-2); }
+  .hero-meta {
+    margin-top: 64px;
+    display:flex; gap: 40px; flex-wrap: wrap;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .hero-meta span strong { color: var(--ink); display:block; font-weight: 600; margin-top: 4px; letter-spacing: 0.06em; }
+
+  /* Section scaffold */
+  section { padding: 96px 0; border-bottom: 1px solid var(--line); }
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    margin-bottom: 28px;
+    display:flex; align-items:center; gap: 14px;
+  }
+  .section-label::before {
+    content:""; display:inline-block; width: 28px; height:1px; background: var(--muted-2);
+  }
+  h2 {
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.028em;
+    line-height: 1.12;
+    margin-bottom: 24px;
+    max-width: 680px;
+  }
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin-bottom: 8px;
+  }
+  p.body {
+    font-size: 1.02rem;
+    color: var(--ink-2);
+    margin-bottom: 18px;
+    max-width: 640px;
+  }
+  p.body.lg { font-size: 1.12rem; }
+
+  /* Lessons */
+  .lessons { display:grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: var(--line); border: 1px solid var(--line); margin-top: 12px; }
+  .lesson { background: var(--paper); padding: 32px 28px; }
+  .lesson .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted-2); margin-bottom: 14px;
+  }
+  .lesson h3 { margin-bottom: 10px; }
+  .lesson p { font-size: 0.95rem; color: var(--muted); line-height: 1.55; }
+  @media (max-width: 720px){ .lessons { grid-template-columns: 1fr; } }
+
+  /* Properties */
+  .properties { margin-top: 8px; }
+  .property {
+    border-top: 2px solid var(--line);
+    padding: 36px 0 32px;
+    transition: border-color .25s;
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+  }
+  .property:hover { border-top-color: var(--prop-accent, var(--accent)); }
+  .property-id {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted-2);
+  }
+  .property-status {
+    display:inline-block; margin-top: 10px;
+    font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    border-radius: 3px; padding: 3px 8px;
+  }
+  .status--active { color: var(--ok); background: rgba(16,185,129,0.08); }
+  .status--internal { color: var(--accent-2); background: rgba(139,92,246,0.08); }
+  .status--dev { color: var(--warn); background: rgba(245,158,11,0.08); }
+  .property-name { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .property-tagline { font-family: 'IBM Plex Serif', serif; font-style: italic; color: var(--accent-2); margin-bottom: 14px; font-size: 0.95rem; }
+  .property p { font-size: 0.98rem; color: var(--ink-2); max-width: 560px; }
+  @media (max-width: 680px){ .property { grid-template-columns: 1fr; gap: 12px; } }
+
+  /* Capabilities grid */
+  .caps {
+    display:grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1px; background: var(--line); border:1px solid var(--line);
+    margin-top: 12px;
+  }
+  .cap { background: var(--paper); padding: 22px 22px; }
+  .cap h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .cap p { font-size: 0.83rem; color: var(--muted); line-height: 1.5; }
+  @media (max-width: 720px){ .caps { grid-template-columns: 1fr; } }
+
+  /* Comparison table */
+  table.compare {
+    width: 100%; border-collapse: collapse; margin-top: 20px;
+    font-size: 0.92rem;
+  }
+  .compare th, .compare td {
+    text-align: left; padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .compare thead th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted-2); font-weight: 500;
+    border-bottom: 2px solid var(--ink);
+  }
+  .compare tbody td:first-child { color: var(--muted); font-weight: 500; width: 28%; }
+  .compare tbody td.ge { color: var(--ink); font-weight: 600; }
+  .compare tbody td.trad { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(107,114,128,0.4); }
+
+  /* Revenue table */
+  table.rev {
+    width: 100%; border-collapse: collapse; margin-top: 20px;
+    font-size: 0.88rem;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .rev th, .rev td { padding: 12px 10px; text-align: right; border-bottom: 1px solid var(--line); }
+  .rev th:first-child, .rev td:first-child { text-align: left; font-family: 'IBM Plex Sans', sans-serif; color: var(--muted); font-size: 0.92rem; }
+  .rev thead th {
+    font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted-2); font-weight: 500;
+    border-bottom: 2px solid var(--ink);
+  }
+  .rev tr.total td { border-bottom: none; border-top: 2px solid var(--ink); font-weight: 700; color: var(--ink); padding-top: 16px; }
+  .rev tr.total td:first-child { font-family: 'IBM Plex Sans', sans-serif; }
+
+  /* Pull quote */
+  .pull {
+    margin: 40px 0 10px;
+    font-family: 'IBM Plex Serif', serif;
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    font-style: italic;
+    line-height: 1.3;
+    color: var(--ink);
+    max-width: 680px;
+    border-left: 3px solid var(--accent);
+    padding-left: 22px;
+  }
+
+  /* Scene */
+  .scene-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 12px; }
+  .scene-grid h3 { margin-bottom: 4px; }
+  .scene-grid .role { font-family:'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 14px; }
+  .scene-grid p { font-size: 0.96rem; color: var(--ink-2); }
+  @media (max-width: 720px){ .scene-grid { grid-template-columns: 1fr; gap: 24px; } }
+
+  /* Ask */
+  .ask {
+    background: var(--ink);
+    color: #f5f5f0;
+    padding: 110px 0;
+    border-bottom: none;
+  }
+  .ask .section-label { color: rgba(245,245,240,0.5); }
+  .ask .section-label::before { background: rgba(245,245,240,0.5); }
+  .ask h2 { color: #ffffff; max-width: 720px; }
+  .ask p.body { color: rgba(245,245,240,0.75); max-width: 620px; }
+  .ask .amount {
+    font-size: clamp(3rem, 7vw, 5.6rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin: 18px 0 8px;
+    color: #ffffff;
+  }
+  .ask .amount small { font-size: 0.28em; font-weight: 500; color: rgba(245,245,240,0.5); letter-spacing: 0.1em; text-transform: uppercase; margin-left: 10px; vertical-align: middle; }
+  .ask .closer {
+    font-family: 'IBM Plex Serif', serif;
+    font-style: italic;
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    margin-top: 56px;
+    color: #ffffff;
+  }
+  .contact-row {
+    margin-top: 36px;
+    display:flex; gap: 24px; flex-wrap: wrap;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .contact-row a { color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 3px; transition: border-color .2s; }
+  .contact-row a:hover { border-bottom-color: #ffffff; }
+
+  /* Footer */
+  footer.foot {
+    background: var(--ink);
+    color: rgba(245,245,240,0.5);
+    padding: 36px 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .foot-inner { display:flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <span class="brand">General Eclectic</span>
+    <div class="nav-links">
+      <a href="#thesis">Thesis</a>
+      <a href="#problem">Problem</a>
+      <a href="#build">What we build</a>
+      <a href="#revenue">Revenue</a>
+      <a href="#ask">The Ask</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">G.E. Creative Infrastructures · April 2026</div>
+    <h1 class="display">Intelligence<br>for Creatives.</h1>
+    <p class="lede">General Eclectic is a creative infrastructure company for the Infinite Age. Part label, part technology studio, part distribution engine. Content is king, but <em>distribution is the kingdom.</em></p>
+    <div class="hero-meta">
+      <span>Stage<strong>Seed · $1.5M</strong></span>
+      <span>Based<strong>Global · Remote-first</strong></span>
+      <span>Founder<strong>Terence Leong</strong></span>
+    </div>
+  </div>
+</header>
+
+<section id="thesis">
+  <div class="wrap">
+    <div class="section-label">Thesis · Four things I learned</div>
+    <h2>Two decades at the intersection of music, culture, and technology — distilled into four convictions.</h2>
+    <div class="lessons">
+      <div class="lesson">
+        <div class="num">Lesson 01</div>
+        <h3>Scale matters.</h3>
+        <p>Talent is the entry fee. Scale is the game. Popularity that can't scale eventually loses to popularity that can.</p>
+      </div>
+      <div class="lesson">
+        <div class="num">Lesson 02</div>
+        <h3>Data matters.</h3>
+        <p>The real skill is holding music and math at once — using data to sharpen instinct, and instinct to interpret data.</p>
+      </div>
+      <div class="lesson">
+        <div class="num">Lesson 03</div>
+        <h3>People front the art.</h3>
+        <p>Nobody falls in love with a song alone. They fall in love with the person singing it. I will always sell people and persona first.</p>
+      </div>
+      <div class="lesson">
+        <div class="num">Lesson 04</div>
+        <h3>Never be comfortable.</h3>
+        <p>Comfort is the last stop before irrelevance. The only durable advantage I've ever had came from staying deliberately uncomfortable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="section-label">The Problem</div>
+    <h2>The music industry thinks it has a quality problem. It doesn't. It has a distribution problem.</h2>
+    <p class="body lg">Over 100,000 new tracks hit streaming platforms every day. The vast majority will never be heard — not because they aren't good, but because nobody with reach decided to play them.</p>
+    <p class="body">Think about it like paintings in a museum. The works on the wall aren't necessarily better than the ones in the basement. They're just the ones someone chose to hang. Fame is a function of wall space, not brushstrokes.</p>
+    <div class="pull">Traditional labels starve artists of reach. Faceless AI platforms strip them of humanity. Neither has solved the actual problem.</div>
+  </div>
+</section>
+
+<section id="opportunity">
+  <div class="wrap">
+    <div class="section-label">The Opportunity</div>
+    <h2>People gravitate toward the familiar surprise. A stranger who somehow feels like a friend.</h2>
+    <p class="body lg">The MAYA principle — Most Advanced Yet Acceptable — has predicted cultural taste across every domain for half a century. General Eclectic owns this exact territory.</p>
+    <p class="body"><strong>The Acceptable.</strong> Real artists. Real voices. Real scene credibility.</p>
+    <p class="body"><strong>The Advanced.</strong> Emerging creative technology that expands reach, compresses cycle time, and multiplies presence across markets, formats, and fan touchpoints.</p>
+    <div class="pull">We use our own AGI to solve the science of hits.</div>
+    <p class="body" style="margin-top: 30px;">The opportunity isn't to make more music. The world is drowning in music. The opportunity is to build the infrastructure that ensures great music and great artistry actually get heard.</p>
+  </div>
+</section>
+
+<section id="build">
+  <div class="wrap">
+    <div class="section-label">What we build · Three properties, one conviction</div>
+    <h2>A creative infrastructure company, built as a practice and sold as a product.</h2>
+    <div class="properties">
+
+      <div class="property" style="--prop-accent: #6366f1;">
+        <div>
+          <div class="property-id">001</div>
+          <span class="property-status status--active">Active</span>
+        </div>
+        <div>
+          <div class="property-name">Generally Eclectic</div>
+          <div class="property-tagline">Managing eclectic humans.</div>
+          <p>The label and proving ground. Real artists — new and established — signed, developed, and released with intention. The misfits, the genre-benders, the ones who don't fit a playlist algorithm's idea of marketable. Every capability we build exists because a signed artist needs it. You are the unfair advantage to begin with.</p>
+        </div>
+      </div>
+
+      <div class="property" style="--prop-accent: #8b5cf6;">
+        <div>
+          <div class="property-id">002</div>
+          <span class="property-status status--internal">Practice → Product</span>
+        </div>
+        <div>
+          <div class="property-name">artiste.md</div>
+          <div class="property-tagline">Intelligent artistry.</div>
+          <p>A new intelligent methodology for artists and creators. Every artist gets their ".md" — a manifest, a soul-on-a-disk. Upload your catalog, your voice, your taste, your point of view. We build the rest of the world around it. A linear artist has a career. A dynamic artist has a world.</p>
+        </div>
+      </div>
+
+      <div class="property" style="--prop-accent: #06b6d4;">
+        <div>
+          <div class="property-id">003</div>
+          <span class="property-status status--dev">In Development</span>
+        </div>
+        <div>
+          <div class="property-name">royalty.md</div>
+          <div class="property-tagline">Everybody needs to eat.</div>
+          <p>A token and a product. How artists get paid — real-time, transparent, programmable. The last piece, because it completes the circle.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="artiste">
+  <div class="wrap">
+    <div class="section-label">artiste.md · Two arms</div>
+    <h2>A proprietary LLM in one hand, a proprietary workflow in the other.</h2>
+
+    <h3 style="margin-top: 28px;">Arm 01 · Almost Generally Intelligent (AGI)</h3>
+    <p class="body">Our proprietary LLM, trained on the science of what makes culture move. Technology smart enough to matter, modest enough to serve the artist instead of impersonating them. Not minds — instruments.</p>
+
+    <h3 style="margin-top: 14px;">Arm 02 · Agents &amp; Repertoire (A&amp;R)</h3>
+    <p class="body">The proprietary workflow. When we sign an artist we ingest their catalog, vocal stems, taste, and creative point of view, and build a bespoke intelligence layer around them. The artist sets the vibe and acts as Creative Director. A&amp;R turns creative DNA into omnipresence.</p>
+
+    <h3 style="margin-top: 28px; margin-bottom: 18px;">The Capabilities</h3>
+    <div class="caps">
+      <div class="cap"><h4>Unique Voice</h4><p>A bespoke vocal instrument. Licensed, controlled, owned by the artist.</p></div>
+      <div class="cap"><h4>Unique Personality</h4><p>Not a chatbot. A trained digital extension of the artist's actual mind.</p></div>
+      <div class="cap"><h4>Infinite Engagement</h4><p>Real conversations with fans across platforms, time zones, and languages — personalized at scale.</p></div>
+      <div class="cap"><h4>Infinite Streaming</h4><p>24/7 lo-fi streams, B-sides, ambient variations. Revenue that never sleeps.</p></div>
+      <div class="cap"><h4>Infinite Touring</h4><p>AI-powered live performances in Seoul, São Paulo, and Berlin on the same night.</p></div>
+      <div class="cap"><h4>Globally Ready</h4><p>Every piece of content adapted for language, cultural context, and regional platform. One artist, every market.</p></div>
+      <div class="cap"><h4>Liquid API</h4><p>Adaptive stems for gaming, VR, spatial audio, and sync. Living, responsive audio.</p></div>
+      <div class="cap"><h4>Social Engine</h4><p>Daily short-form content, remix stems, visual art — generated from creative DNA, requiring only approval.</p></div>
+      <div class="cap"><h4>Sync &amp; Licensing Autopilot</h4><p>AI-driven placement across film, TV, gaming, and advertising in real time.</p></div>
+      <div class="cap"><h4>Audience Intelligence</h4><p>Sentiment, trend detection, predictive analytics. Not just who's listening — what they want next.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="why-we-win">
+  <div class="wrap">
+    <div class="section-label">Why we win</div>
+    <h2>Incumbents still operate as if making a great record is enough. It isn't. It never was.</h2>
+    <p class="body">The old gatekeepers controlled so few channels that distribution was built into the deal. Now distribution is infinite and attention is scarce. The labels haven't adapted. Everyone is hoping the algorithms are kind. We sell something fundamentally different.</p>
+    <table class="compare">
+      <thead>
+        <tr><th></th><th>Traditional Label</th><th>General Eclectic</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Core Belief</td><td class="trad">Great music finds its audience</td><td class="ge">Great music needs an engine</td></tr>
+        <tr><td>Core Asset</td><td class="trad">Static master recordings</td><td class="ge">Liquid distribution architecture</td></tr>
+        <tr><td>Value Prop</td><td class="trad">"We fund your album."</td><td class="ge">"We make sure people hear it."</td></tr>
+        <tr><td>Exposure Model</td><td class="trad">Hope + playlist pitching</td><td class="ge">Engineered omnipresence</td></tr>
+        <tr><td>Scalability</td><td class="trad">Capped by human hours</td><td class="ge">Limitless</td></tr>
+        <tr><td>Revenue Model</td><td class="trad">Advances recouped from streams</td><td class="ge">Liquid API + Sync + Generative streaming</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="revenue">
+  <div class="wide">
+    <div class="section-label" style="max-width: 720px; margin-left: auto; margin-right: auto;">Revenue architecture</div>
+    <div style="max-width: 720px; margin: 0 auto;">
+      <h2>We are a music company first. The intelligence layer amplifies every dollar.</h2>
+      <p class="body">Revenue starts with real artists making real music — regular releases, catalogue income, sync, and touring. Four stacked lines: music core, catalogue &amp; IP, artiste.md SaaS, and consultancy &amp; management.</p>
+    </div>
+    <div style="max-width: 860px; margin: 30px auto 0;">
+      <table class="rev">
+        <thead>
+          <tr><th></th><th>Year 1</th><th>Year 2</th><th>Year 3</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Signed Artists (real)</td><td>3–5</td><td>8–12</td><td>15–20</td></tr>
+          <tr><td>AI Mixtape Personas</td><td>2–3</td><td>5–10</td><td>10–20</td></tr>
+          <tr><td>Releases / Year</td><td>15–25</td><td>40–60</td><td>80–120</td></tr>
+          <tr><td>Streaming Revenue</td><td>$50K–$150K</td><td>$300K–$600K</td><td>$800K–$1.5M</td></tr>
+          <tr><td>Sync &amp; Licensing</td><td>$30K–$80K</td><td>$150K–$300K</td><td>$400K–$800K</td></tr>
+          <tr><td>Touring &amp; Live</td><td>$20K–$50K</td><td>$100K–$250K</td><td>$300K–$600K</td></tr>
+          <tr><td>Catalogue (Chynahouse)</td><td>$20K–$40K</td><td>$40K–$80K</td><td>$60K–$120K</td></tr>
+          <tr><td>Consultancy &amp; Mgmt</td><td>$60K–$120K</td><td>$120K–$240K</td><td>$200K–$400K</td></tr>
+          <tr><td>artiste.md SaaS</td><td>—</td><td>$50K–$100K</td><td>$200K–$500K</td></tr>
+          <tr class="total"><td>Total Revenue</td><td>$180K–$440K</td><td>$760K–$1.5M</td><td>$2.0M–$3.9M</td></tr>
+        </tbody>
+      </table>
+      <p class="body" style="font-size: 0.85rem; color: var(--muted); margin-top: 18px;">Conservative projections based on a phased roster build. Avg 500K–2M streams per release. Sync fees $5K–$25K per placement. artiste.md SaaS launches Year 2 at $500–$2,000/mo per seat.</p>
+    </div>
+  </div>
+</section>
+
+<section id="scene">
+  <div class="wrap">
+    <div class="section-label">The Scene</div>
+    <h2>Hits don't start by reaching everyone. They start by being deeply loved by a connected few.</h2>
+    <p class="body">Every cultural phenomenon that looks like it exploded overnight actually grew the same way: it caught fire inside a tight-knit community first, then radiated outward. The mistake most companies make is trying to be mainstream from day one. The right move is to start with a scene.</p>
+    <div class="scene-grid">
+      <div>
+        <h3>Nu Mando</h3>
+        <div class="role">The movement</div>
+        <p>A genre-fluid, community-first sound rooted in Mandarin-language music but drawing freely from hip-hop, electronic, R&amp;B, and global bass. Real density. Real rituals. The cultural fuel.</p>
+      </div>
+      <div>
+        <h3>Chynatown</h3>
+        <div class="role">The brand</div>
+        <p>If Nu Mando is the movement, Chynatown is what you wear when you belong to it. A lifestyle and apparel IP we own and develop — visual identity, merch, events, cross-cultural collabs. Movement and brand, working as one.</p>
+      </div>
+    </div>
+    <div class="pull" style="margin-top: 44px;">That's not a niche limitation. That's the entire strategy.</div>
+  </div>
+</section>
+
+<section id="why-now">
+  <div class="wrap">
+    <div class="section-label">Why now</div>
+    <h2>The tools didn't exist two years ago. The audiences weren't ready three years ago. The artists weren't asking for it five years ago. All three have now converged.</h2>
+    <p class="body">The window for someone to plant a flag on this territory is open but closing. Whoever builds the permanent brand in this space in the next eighteen months will own it for the next decade.</p>
+    <p class="body">I've spent two decades earning the right to be the one to do it. I'm not starting from zero — I'm starting from twenty years of scar tissue and a playbook I wrote in my own handwriting.</p>
+  </div>
+</section>
+
+<section id="ask" class="ask">
+  <div class="wrap">
+    <div class="section-label">The Ask</div>
+    <h2>The permanent home for always-on artistry.</h2>
+    <div class="amount">$1.5M <small>seed round</small></div>
+    <p class="body">To sign the first cohort of real artists, ship artiste.md as a working product, prove the monetization model, and establish the brand as the default answer when anyone in culture asks, "what does an always-on artist business actually look like?"</p>
+    <p class="body">I'm not looking for passengers. I'm looking for people who see what I see and want to help build it — capital, yes, but also relationships, conviction, and the willingness to stay uncomfortable with me while we figure this out in public.</p>
+    <div class="closer">I want to build it with you.</div>
+    <div class="contact-row">
+      <a href="mailto:tye@chynahouse.com">tye@chynahouse.com</a>
+      <a href="https://generaleclectic.company">generaleclectic.company</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <span>© 2026 G.E. Creative Infrastructures</span>
+    <span>Terence Leong · Founder</span>
+  </div>
+</footer>
+
+</body>
+</html>
